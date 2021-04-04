@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 web-app</title>
+</head>
+
+<body>
+
+    <div style="color:blue">
+
+        <form action="{{ url_for('predict')}}" method="post">
+            <h2>COVID-19 TEST FROM HOME</h2>
+            <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
+                <tr>
+                    <td><h3>Gender</h3> </td>
+                    <td> 
+                        <label><select name="Male_Female" id="Sex" required="required">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h3>Age</h3></td>
+                    <td><input id="Age" name="Patient_Age" required="required">
+                    </td>
+                </tr>
+                <tr>
+                    <td><h3>Went_icu before</h3></td>
+                    <td> 
+                        <select name="Went_icu" id="Icu" required="required">
+                            <option value="Male">Yes</option>
+                            <option value="Female">No</option>
+                        </select>
+                </tr>
+                <tr>
+                    <td> <h3>Temprature</h3></td>
+                    <td>
+                        <input id="Temprature" name="Patient_temprature" required="required">
+                    </td>
+                </tr>
+                <tr>
+                    <td> <h3>Comment about body feeling</h3></td>
+                    <td>
+                        <input type="text" id="Feeling" name="Patient_feeling" required="required">
+                    </td>
+                </tr>
+                <tr>
+                    <td> <h3>Image(X-ray) taken by mobile:</h3></td><br>
+                    <td>
+                        <label for="image">
+                          <input id="src" name='Image_' type="file" required="required"/> <!-- input you want to read from (src) -->
+                                    <img id="target"/> <!-- image you want to display it (target) -->
+                       </label>
+                    </td>
+                </tr>
+            </table>
+            <!--
+            <label><h3>Sex</h3><br><select name="Male_Female" id="Sex" required="required">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select></label>
+            <h3>Age</h3><br><input id="Age" name="Patient_Age" required="required">
+            <h3>Went_icu before</h3><br><select name="Went_icu" id="Icu" required="required">
+                <option value="Male">Yes</option>
+                <option value="Female">No</option>
+            </select>
+            <h3>Temprature</h3><br><input id="Temprature" name="Patient_temprature" required="required">
+            <h3>Comment about body feeling</h3><br><input type="text" id="Feeling" name="Patient_feeling" required="required">
+            
+           <label for="image">
+              <h3>Image</h3><input id="src" name='Image_' type="file"/> 
+                        <img id="target"/> 
+           </label>
+            -->
+            <br><br><button id="sub" type="submit"><h2>See the result at the bottom after press this button</h2></button>
+            <br>
+        </form>
+
+        <script type="text/javascript">
+            function showImage(src,target) {
+
+                var fr = new FileReader();
+                // when image is loaded, set the src of the image where you want to display it
+                fr.onload = function(e) { target.src = this.result; };
+                src.addEventListener("change",function() {
+                // fill fr with image data    
+                fr.readAsDataURL(src.files[0]);
+                });
+            }
+            var src = document.getElementById("src");
+            var target = document.getElementById("target");
+            showImage(src);
+        </script>
+
+        <br><br><h3>{{ prediction_text }}<h3>
+    </div>
+
+
+    <style>
+        body {
+            background-color: lightslategray;
+            text-align: center;
+            padding: 0px;
+        }
+        button {
+          background-color: #4CAF50;
+          border: none;
+          color: white;
+          padding: 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 20px;
+          margin: 4px 2px;
+          border-radius: 30%;
+        }
+
+
+    </style>
+
+</body>
+
+</html>
